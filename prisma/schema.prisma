@@ -8,7 +8,71 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(uuid())
-  email String @unique
-  name  String
+  id          String       @id @default(uuid())
+  email       String       @unique
+  firstName   String
+  lastName    String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  retirements Retirement[]
+}
+
+model Supplier {
+  id            String    @id @default(uuid())
+  firstName     String
+  lastName      String?
+  email         String    @unique
+  standards     String[]
+  otherStandard String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  projects      Project[]
+}
+
+model Project {
+  id                 String       @id @default(uuid())
+  name               String
+  standard           String
+  methodology        String
+  projectType        String
+  country            String
+  region             String?
+  vintageYear        Int
+  creditsAvailable   Int
+  pricePerCredit     Decimal      @db.Decimal(10, 2)
+  certificationLink  String?
+  verificationStatus Boolean      @default(false)
+  imageUrl           String?
+  sdgs               Int[]
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  supplierId         String?
+  supplier           Supplier?    @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  retirements        Retirement[]
+}
+
+model Retirement {
+  id              String       @id @default(uuid())
+  projectId       String
+  userId          String?
+  beneficiaryName String?
+  purpose         String?
+  creditsRetired  Decimal      @db.Decimal(10, 2)
+  retirementDate  DateTime     @default(now())
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  project         Project      @relation(fields: [projectId], references: [id])
+  user            User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  certificate     Certificate?
+}
+
+model Certificate {
+  id           String     @id @default(uuid())
+  retirementId String     @unique
+  issueDate    DateTime   @default(now())
+  serialNumber String     @unique
+  fileUrl      String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  retirement   Retirement @relation(fields: [retirementId], references: [id], onDelete: Cascade)
 }
