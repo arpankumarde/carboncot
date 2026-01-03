@@ -7,49 +7,49 @@ export default function ContactPage() {
   return (
     <div className="container mx-auto px-4 py-12 max-w-2xl">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-green-900 mb-4">Contact Us</h1>
-        <p className="text-lg text-gray-600">
+        <h1 className="text-4xl font-bold text-green-800 mb-4">Contact Us</h1>
+        <p className="text-lg text-green-900">
           Have questions? We&apos;d love to hear from you.
         </p>
-        <div className="h-1 w-24 bg-green-700 mx-auto mt-4"></div>
+        <div className="h-1 w-24 bg-green-600 mx-auto mt-4"></div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-        <Card className="border-green-300">
-          <CardHeader>
-            <CardTitle className="text-green-900">Email</CardTitle>
+        <Card className="border-green-200 bg-white">
+          <CardHeader className="bg-green-50 border-b border-green-100">
+            <CardTitle className="text-green-800">Email</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-700">info@carboncot.com</p>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-green-900">info@carboncot.com</p>
+            <p className="text-sm text-green-700 mt-1">
               We typically respond within 24 hours
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-green-300">
-          <CardHeader>
-            <CardTitle className="text-green-900">Phone</CardTitle>
+        <Card className="border-green-200 bg-white">
+          <CardHeader className="bg-green-50 border-b border-green-100">
+            <CardTitle className="text-green-800">Phone</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-700">+1 (555) 123-4567</p>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-green-900">+1 (555) 123-4567</p>
+            <p className="text-sm text-green-700 mt-1">
               Mon-Fri, 9am-5pm EST
             </p>
           </CardContent>
         </Card>
       </div>
 
-      <Card className="border-green-300">
-        <CardHeader>
-          <CardTitle className="text-green-900">Send us a message</CardTitle>
+      <Card className="border-green-200 bg-white">
+        <CardHeader className="bg-green-50 border-b border-green-100">
+          <CardTitle className="text-green-800">Send us a message</CardTitle>
         </CardHeader>
         <CardContent>
           <form className="space-y-4">
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-green-800 mb-1"
               >
                 Name
               </label>
@@ -63,7 +63,7 @@ export default function ContactPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-green-800 mb-1"
               >
                 Email
               </label>
@@ -77,7 +77,7 @@ export default function ContactPage() {
             <div>
               <label
                 htmlFor="subject"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-green-800 mb-1"
               >
                 Subject
               </label>
@@ -91,7 +91,7 @@ export default function ContactPage() {
             <div>
               <label
                 htmlFor="message"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-green-800 mb-1"
               >
                 Message
               </label>

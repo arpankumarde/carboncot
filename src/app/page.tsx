@@ -116,20 +116,20 @@ export default function HomePage() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-green-50 to-white py-20">
+      <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-block mb-4">
-              <span className="bg-yellow-100 text-yellow-800 border border-yellow-300 rounded-full px-4 py-1 text-sm font-medium">
+              <span className="bg-green-50 text-green-800 border border-green-300 rounded-full px-4 py-1 text-sm font-medium">
                 🌱 Verified Carbon Credits
               </span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-green-900 mb-6 leading-tight">
+            <h1 className="text-5xl md:text-6xl font-bold text-green-800 mb-6 leading-tight">
               Offset Your Carbon Footprint
               <br />
               <span className="text-green-700">With Confidence</span>
             </h1>
-            <p className="text-xl text-gray-700 mb-8 leading-relaxed">
+            <p className="text-xl text-green-900 mb-8 leading-relaxed">
               Explore verified carbon projects, purchase credits, and receive instant
               retirement certificates. Transparent, credible, and simple.
             </p>
@@ -155,15 +155,15 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 bg-white border-y border-green-100">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-green-700 mb-2">
+                <div className="text-3xl md:text-4xl font-bold text-green-800 mb-2">
                   {stat.value}
                 </div>
-                <div className="text-sm md:text-base text-gray-600">{stat.label}</div>
+                <div className="text-sm md:text-base text-green-700">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -171,13 +171,14 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-green-50">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-white relative">
+        <div className="absolute top-0 left-0 right-0 h-1/2 bg-green-50"></div>
+        <div className="container mx-auto px-4 relative">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-green-900 mb-4">
+            <h2 className="text-4xl font-bold text-green-800 mb-4">
               Why Choose CarbonCot?
             </h2>
-            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+            <p className="text-lg text-green-900 max-w-2xl mx-auto">
               We make carbon offsetting simple, transparent, and trustworthy
             </p>
           </div>
@@ -192,7 +193,7 @@ export default function HomePage() {
                   <CardTitle className="text-green-800">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <p className="text-green-900 text-sm leading-relaxed">
                     {feature.description}
                   </p>
                 </CardContent>
@@ -206,18 +207,18 @@ export default function HomePage() {
       <section id="projects" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-green-900 mb-4">
+            <h2 className="text-4xl font-bold text-green-800 mb-4">
               Featured Carbon Projects
             </h2>
-            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+            <p className="text-lg text-green-900 max-w-2xl mx-auto">
               Browse our verified carbon credit projects from around the world.
               Each project is certified and contributes to sustainable development.
             </p>
           </div>
 
           <div className="mb-8 flex items-center justify-center">
-            <div className="flex items-center gap-2 bg-yellow-50 border border-yellow-300 rounded-lg px-6 py-3">
-              <span className="text-yellow-800 font-medium">
+            <div className="flex items-center gap-2 bg-green-50 border border-green-300 rounded-lg px-6 py-3">
+              <span className="text-green-800 font-medium">
                 🌱 All projects are verified and certified
               </span>
             </div>
@@ -243,13 +244,14 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 bg-green-50">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-white relative">
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-green-50"></div>
+        <div className="container mx-auto px-4 relative">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-green-900 mb-4">
+            <h2 className="text-4xl font-bold text-green-800 mb-4">
               How It Works
             </h2>
-            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+            <p className="text-lg text-green-900 max-w-2xl mx-auto">
               Simple steps to offset your carbon footprint
             </p>
           </div>
@@ -261,7 +263,7 @@ export default function HomePage() {
               <h3 className="text-xl font-semibold text-green-800 mb-2">
                 Browse Projects
               </h3>
-              <p className="text-gray-600">
+              <p className="text-green-900">
                 Explore verified carbon projects by country, type, and certification
                 standard. View detailed information about each project.
               </p>
@@ -273,7 +275,7 @@ export default function HomePage() {
               <h3 className="text-xl font-semibold text-green-800 mb-2">
                 Select & Retire
               </h3>
-              <p className="text-gray-600">
+              <p className="text-green-900">
                 Choose the number of credits you want to retire, add beneficiary
                 information, and complete your purchase.
               </p>
@@ -285,7 +287,7 @@ export default function HomePage() {
               <h3 className="text-xl font-semibold text-green-800 mb-2">
                 Get Certificate
               </h3>
-              <p className="text-gray-600">
+              <p className="text-green-900">
                 Receive your digital retirement certificate instantly. Download,
                 share, or print your proof of carbon offset.
               </p>
@@ -314,7 +316,7 @@ export default function HomePage() {
                 size="lg"
                 className="bg-white hover:bg-gray-100 text-green-700 px-8 py-6 text-lg font-semibold rounded-lg"
               >
-                <Link href="/contact">I want to sell carbon credits</Link>
+                <Link href="/sell">I want to sell carbon credits</Link>
               </Button>
             </div>
           </div>

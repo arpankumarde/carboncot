@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 interface ProjectCardProps {
@@ -17,7 +23,6 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  // Dummy image URLs - using Unsplash with different nature images
   const imageUrls = [
     "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop",
     "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400&h=300&fit=crop",
@@ -26,9 +31,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
     "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&h=300&fit=crop",
   ];
   const imageIndex = parseInt(project.project_id) % imageUrls.length;
-  
+
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow border-green-300">
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow border-green-300 pt-0">
       <div className="relative h-48 w-full bg-green-100">
         <img
           src={imageUrls[imageIndex]}
@@ -42,30 +47,36 @@ export function ProjectCard({ project }: ProjectCardProps) {
         )}
       </div>
       <CardHeader>
-        <CardTitle className="text-lg text-green-900">{project.name}</CardTitle>
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">
+        <CardTitle className="text-lg text-green-800">{project.name}</CardTitle>
+        <div className="flex items-center gap-2 text-sm text-green-900">
+          <span className="bg-green-50 text-green-800 px-2 py-1 rounded text-xs font-medium border border-green-200">
             {project.standard}
           </span>
-          <span className="text-gray-500">•</span>
+          <span className="text-green-700">•</span>
           <span>{project.country}</span>
         </div>
       </CardHeader>
       <CardContent className="space-y-2">
         <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Type:</span>
-          <span className="font-medium text-green-800">{project.project_type}</span>
+          <span className="text-green-900">Type:</span>
+          <span className="font-medium text-green-800">
+            {project.project_type}
+          </span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Vintage:</span>
-          <span className="font-medium">{project.vintage_year}</span>
+          <span className="text-green-900">Vintage:</span>
+          <span className="font-medium text-green-800">
+            {project.vintage_year}
+          </span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Available:</span>
-          <span className="font-medium">{project.credits_available.toLocaleString()} tCO₂e</span>
+          <span className="text-green-900">Available:</span>
+          <span className="font-medium text-green-800">
+            {project.credits_available.toLocaleString()} tCO₂e
+          </span>
         </div>
         <div className="flex justify-between items-center pt-2 border-t border-green-200">
-          <span className="text-gray-600">Price:</span>
+          <span className="text-green-900">Price:</span>
           <span className="text-xl font-bold text-green-800">
             ${project.price_per_credit.toFixed(2)}
           </span>
@@ -88,4 +99,3 @@ export function ProjectCard({ project }: ProjectCardProps) {
     </Card>
   );
 }
-
