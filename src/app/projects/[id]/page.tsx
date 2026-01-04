@@ -34,6 +34,31 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     },
   });
 
+  // Fetch last 5 retirements separately for display
+  const recentRetirements = await prisma.retirement.findMany({
+    where: {
+      projectId: id,
+    },
+    orderBy: {
+      retirementDate: "desc",
+    },
+    take: 5,
+    include: {
+      user: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
+  });
+
+  const totalRetirementsCount = await prisma.retirement.count({
+    where: {
+      projectId: id,
+    },
+  });
+
   if (!project) {
     return notFound();
   }
@@ -172,13 +197,12 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                   <div className="text-sm text-slate-500">
                     @
                     {project.supplier
-                      ? `${project.supplier.firstName}${
-                          project.supplier.lastName
-                            ? ` ${project.supplier.lastName}`
-                            : ""
+                      ? `${project.supplier.firstName}${project.supplier.lastName
+                        ? ` ${project.supplier.lastName}`
+                        : ""
                         }`
-                          .toLowerCase()
-                          .replace(/\s+/g, "")
+                        .toLowerCase()
+                        .replace(/\s+/g, "")
                       : "supplier"}
                   </div>
                 </div>
@@ -379,13 +403,87 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                       style={{
                         width: `${Math.min(
                           (totalRemainingSupply / project.creditsAvailable) *
-                            100,
+                          100,
                           100
                         )}%`,
                       }}
                     />
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Recent Retirements Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Retirements</CardTitle>
+                <p className="text-sm text-slate-600 mt-1">
+                  Latest credit retirements for this project
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {recentRetirements.length === 0 ? (
+                  <p className="text-sm text-slate-500 text-center py-4">
+                    No retirements yet
+                  </p>
+                ) : (
+                  <>
+                    {recentRetirements.map((retirement) => (
+                      <div
+                        key={retirement.id}
+                        className="border border-green-200 bg-green-50/50 rounded-lg p-3 hover:bg-green-50 transition"
+                      >
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex-1">
+                            <div className="font-semibold text-slate-900 text-sm">
+                              {retirement.beneficiaryName ||
+                                (retirement.user
+                                  ? `${retirement.user.firstName}${retirement.user.lastName
+                                    ? ` ${retirement.user.lastName}`
+                                    : ""
+                                  }`
+                                  : "Anonymous")}
+                            </div>
+                            {retirement.purpose && (
+                              <div className="text-xs text-slate-600 mt-1 line-clamp-1">
+                                {retirement.purpose}
+                              </div>
+                            )}
+                          </div>
+                          <div className="text-right">
+                            <div className="font-bold text-green-800">
+                              {Number(retirement.creditsRetired).toFixed(2)}
+                            </div>
+                            <div className="text-xs text-slate-500">
+                              tCO₂e
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-xs text-slate-500">
+                          {new Date(retirement.retirementDate).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            }
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                    {totalRetirementsCount > 5 && (
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="w-full border-green-600 text-green-700 hover:bg-green-50 hover:text-green-800 mt-2"
+                      >
+                        <Link href={`/projects/${id}/retirements`}>
+                          View All Retirements
+                        </Link>
+                      </Button>
+                    )}
+                  </>
+                )}
               </CardContent>
             </Card>
           </div>
