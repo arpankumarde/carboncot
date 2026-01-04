@@ -12,6 +12,8 @@ import {
 import { InfoIcon, ExternalLinkIcon, CheckIcon } from "lucide-react";
 import sdgs from "@/data/sdgs";
 import Image from "next/image";
+import SummarizeProject from "./SummarizeProject";
+import AnalyseRequirement from "./AnalyseRequirement";
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -149,6 +151,9 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
               </CardContent>
             </Card>
 
+            {/* AI Analysis */}
+            <SummarizeProject project={project} />
+
             {/* Description Section */}
             <Card>
               <CardHeader className="p-0">
@@ -197,12 +202,13 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                   <div className="text-sm text-slate-500">
                     @
                     {project.supplier
-                      ? `${project.supplier.firstName}${project.supplier.lastName
-                        ? ` ${project.supplier.lastName}`
-                        : ""
+                      ? `${project.supplier.firstName}${
+                          project.supplier.lastName
+                            ? ` ${project.supplier.lastName}`
+                            : ""
                         }`
-                        .toLowerCase()
-                        .replace(/\s+/g, "")
+                          .toLowerCase()
+                          .replace(/\s+/g, "")
                       : "supplier"}
                   </div>
                 </div>
@@ -403,7 +409,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                       style={{
                         width: `${Math.min(
                           (totalRemainingSupply / project.creditsAvailable) *
-                          100,
+                            100,
                           100
                         )}%`,
                       }}
@@ -438,10 +444,11 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                             <div className="font-semibold text-slate-900 text-sm">
                               {retirement.beneficiaryName ||
                                 (retirement.user
-                                  ? `${retirement.user.firstName}${retirement.user.lastName
-                                    ? ` ${retirement.user.lastName}`
-                                    : ""
-                                  }`
+                                  ? `${retirement.user.firstName}${
+                                      retirement.user.lastName
+                                        ? ` ${retirement.user.lastName}`
+                                        : ""
+                                    }`
                                   : "Anonymous")}
                             </div>
                             {retirement.purpose && (
@@ -454,20 +461,17 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                             <div className="font-bold text-green-800">
                               {Number(retirement.creditsRetired).toFixed(2)}
                             </div>
-                            <div className="text-xs text-slate-500">
-                              tCO₂e
-                            </div>
+                            <div className="text-xs text-slate-500">tCO₂e</div>
                           </div>
                         </div>
                         <div className="text-xs text-slate-500">
-                          {new Date(retirement.retirementDate).toLocaleDateString(
-                            "en-US",
-                            {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            }
-                          )}
+                          {new Date(
+                            retirement.retirementDate
+                          ).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}
                         </div>
                       </div>
                     ))}
@@ -486,6 +490,9 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 )}
               </CardContent>
             </Card>
+
+            {/* Analyze Match Section */}
+            <AnalyseRequirement project={project} />
           </div>
         </div>
       </div>
