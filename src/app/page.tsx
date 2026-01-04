@@ -139,7 +139,7 @@ export default function HomePage() {
                 size="lg"
                 className="bg-green-700 hover:bg-green-800 text-white px-8 py-6 text-lg"
               >
-                <Link href="#projects">Browse Projects</Link>
+                <Link href="/projects">Browse Projects</Link>
               </Button>
               <Button
                 asChild

@@ -33,7 +33,7 @@ export function Header() {
               variant="default"
               className="bg-green-700 hover:bg-green-800 text-white"
             >
-              <Link href="/#projects">Browse Projects</Link>
+              <Link href="/projects">Browse Projects</Link>
             </Button>
           </nav>
         </div>
