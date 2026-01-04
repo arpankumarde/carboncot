@@ -3,10 +3,13 @@ import { Button } from "@/components/ui/button";
 
 export function Header() {
   return (
-    <header className="border-b border-green-200 bg-white">
+    <header className="print:hidden border-b border-green-200 bg-white">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-green-800">
+          <Link
+            href="/"
+            className="text-2xl font-bold font-serif text-green-800"
+          >
             CarbonCot
           </Link>
           <nav className="flex items-center gap-6">
@@ -41,4 +44,3 @@ export function Header() {
     </header>
   );
 }
-

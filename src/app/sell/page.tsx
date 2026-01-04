@@ -18,29 +18,86 @@ import methodologies from "@/data/methodologies";
 export default function SellPage() {
   const [selectedStandards, setSelectedStandards] = useState<string[]>([]);
   const [otherStandard, setOtherStandard] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    businessEmail: "",
-    methodology: "",
+    email: "",
   });
 
   const handleStandardChange = (standard: string, checked: boolean) => {
-    if (checked) {
-      setSelectedStandards([...selectedStandards, standard]);
-    } else {
-      setSelectedStandards(selectedStandards.filter((s) => s !== standard));
-    }
+    setSelectedStandards((prev) =>
+      checked ? [...prev, standard] : prev.filter((s) => s !== standard)
+    );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log({
-      ...formData,
+
+    setError(null);
+    setSuccess(false);
+    setLoading(true);
+
+    // Basic validation
+    if (
+      !formData.firstName ||
+      !formData.email ||
+      selectedStandards.length === 0
+    ) {
+      setError("Please fill all required fields.");
+      setLoading(false);
+      return;
+    }
+
+    if (selectedStandards.includes("Other") && !otherStandard.trim()) {
+      setError("Please specify the other carbon standard.");
+      setLoading(false);
+      return;
+    }
+
+    const payload = {
+      firstName: formData.firstName.trim(),
+      lastName: formData.lastName?.trim() || null,
+      email: formData.email.trim(),
       standards: selectedStandards,
-      otherStandard: otherStandard || undefined,
-    });
+      otherStandard: selectedStandards.includes("Other")
+        ? otherStandard.trim()
+        : null,
+    };
+
+    try {
+      const res = await fetch("/api/suppliers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
+
+      // SUCCESS
+      setSuccess(true);
+
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+      });
+      setSelectedStandards([]);
+      setOtherStandard("");
+    } catch (err: any) {
+      setError(err.message || "Failed to submit application");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const hasOtherStandard = selectedStandards.includes("Other");
@@ -113,12 +170,12 @@ export default function SellPage() {
                 Business email
               </label>
               <Input
-                id="businessEmail"
+                id="email"
                 type="email"
                 required
-                value={formData.businessEmail}
+                value={formData.email}
                 onChange={(e) =>
-                  setFormData({ ...formData, businessEmail: e.target.value })
+                  setFormData({ ...formData, email: e.target.value })
                 }
                 className="border-green-300 focus:border-green-700"
                 placeholder="john.doe@company.com"
@@ -212,7 +269,7 @@ export default function SellPage() {
               )}
 
               {/* Methodology Selection */}
-              <div>
+              {/* <div>
                 <label
                   htmlFor="methodology"
                   className="block text-sm font-medium text-green-800 mb-1"
@@ -243,16 +300,22 @@ export default function SellPage() {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+              </div> */}
             </div>
-
+            {error && <p className="text-red-600 text-sm">{error}</p>}
+            {success && (
+              <p className="text-green-700 text-sm">
+                Application submitted successfully!
+              </p>
+            )}
             {/* Submit Button */}
             <div className="pt-6 border-t border-green-200">
               <Button
                 type="submit"
-                className="w-full bg-green-700 hover:bg-green-800 text-white py-6 text-lg font-semibold"
+                disabled={loading}
+                className="w-full bg-green-700 hover:bg-green-800 text-white py-6"
               >
-                Submit Application
+                {loading ? "Submitting..." : "Submit Application"}
               </Button>
             </div>
           </form>

@@ -39,6 +39,7 @@ model Project {
   region             String?
   vintageYear        Int
   creditsAvailable   Int
+  description        String?
   pricePerCredit     Decimal      @db.Decimal(10, 2)
   certificationLink  String?
   verificationStatus Boolean      @default(false)

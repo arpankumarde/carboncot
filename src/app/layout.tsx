@@ -16,7 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Carboncot",
+  title: "CarbonCot - Your Carbon Offset Partner",
+  description:
+    "CarbonCot is a transparent platform to explore, buy, and retire carbon credits with instant retirement certificates.",
 };
 
 export default function RootLayout({
