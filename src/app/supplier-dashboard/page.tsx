@@ -11,21 +11,33 @@ export default async function SupplierDashboardPage() {
     const cookieStore = await cookies();
     const userId = cookieStore.get("auth_user")?.value;
     const role = cookieStore.get("auth_role")?.value;
+    const isLoggedIn = userId && role === "supplier";
 
-    if (!userId || role !== "supplier") {
-        redirect("/login");
-    }
-
-    const supplier = await prisma.supplier.findUnique({
-        where: { id: userId },
-        include: {
-            projects: {
-                orderBy: {
-                    createdAt: "desc",
+    let supplier;
+    if (isLoggedIn) {
+        supplier = await prisma.supplier.findUnique({
+            where: { id: userId },
+            include: {
+                projects: {
+                    orderBy: {
+                        createdAt: "desc",
+                    },
                 },
             },
-        },
-    });
+        });
+    } else {
+        // Fallback to Demo Supplier
+        supplier = await prisma.supplier.findUnique({
+            where: { email: "admin@greencompany.com" },
+            include: {
+                projects: {
+                    orderBy: {
+                        createdAt: "desc",
+                    },
+                },
+            },
+        });
+    }
 
     if (!supplier) {
         redirect("/login");
@@ -46,7 +58,7 @@ export default async function SupplierDashboardPage() {
                         <div>
                             <h1 className="text-3xl font-bold text-slate-900">Supplier Dashboard</h1>
                             <p className="text-slate-600">
-                                Welcome back, {supplier.firstName}
+                                Welcome back, {supplier.firstName} {(!isLoggedIn) && "(Demo View)"}
                             </p>
                         </div>
                     </div>
@@ -55,9 +67,6 @@ export default async function SupplierDashboardPage() {
                         <Button asChild>
                             <Link href="/sell">List New Project</Link>
                         </Button>
-                        <div className="bg-white p-2 rounded-lg border border-slate-200">
-                            <LogoutButton />
-                        </div>
                     </div>
                 </div>
 

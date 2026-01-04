@@ -10,7 +10,7 @@ import { Loader2 } from "lucide-react";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("12345678");
+    const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const router = useRouter();
@@ -54,6 +54,28 @@ export default function LoginPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
+                    <div className="flex flex-col gap-2 mb-6">
+                        <Button
+                            variant="outline"
+                            className="w-full text-xs"
+                            onClick={() => {
+                                setEmail("arpan@steelforce.com");
+                                setPassword("12345678");
+                            }}
+                        >
+                            Fill Test Credentials (Buyer)
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="w-full text-xs"
+                            onClick={() => {
+                                setEmail("admin@greencompany.com");
+                                setPassword("12345678");
+                            }}
+                        >
+                            Fill Test Credentials (Supplier)
+                        </Button>
+                    </div>
                     <form onSubmit={handleLogin} className="space-y-4">
                         <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>

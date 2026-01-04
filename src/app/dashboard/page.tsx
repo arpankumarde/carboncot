@@ -11,24 +11,39 @@ export default async function DashboardPage() {
     const cookieStore = await cookies();
     const userId = cookieStore.get("auth_user")?.value;
     const role = cookieStore.get("auth_role")?.value;
+    const isLoggedIn = userId && role === "user";
 
-    if (!userId || role !== "user") {
-        redirect("/login");
-    }
-
-    const user = await prisma.user.findUnique({
-        where: { id: userId },
-        include: {
-            retirements: {
-                include: {
-                    project: true,
-                },
-                orderBy: {
-                    retirementDate: "desc",
+    let user;
+    if (isLoggedIn) {
+        user = await prisma.user.findUnique({
+            where: { id: userId },
+            include: {
+                retirements: {
+                    include: {
+                        project: true,
+                    },
+                    orderBy: {
+                        retirementDate: "desc",
+                    },
                 },
             },
-        },
-    });
+        });
+    } else {
+        // Fallback to Demo User
+        user = await prisma.user.findUnique({
+            where: { email: "arpan@steelforce.com" },
+            include: {
+                retirements: {
+                    include: {
+                        project: true,
+                    },
+                    orderBy: {
+                        retirementDate: "desc",
+                    },
+                },
+            },
+        });
+    }
 
     if (!user) {
         redirect("/login");
@@ -53,7 +68,7 @@ export default async function DashboardPage() {
                         <div>
                             <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
                             <p className="text-slate-600">
-                                Welcome back, {user.firstName}
+                                Welcome back, {user.firstName} {(!isLoggedIn) && "(Demo View)"}
                             </p>
                         </div>
                     </div>
@@ -62,9 +77,6 @@ export default async function DashboardPage() {
                         <Button asChild>
                             <Link href="/projects">Retire More Credits</Link>
                         </Button>
-                        <div className="bg-white p-2 rounded-lg border border-slate-200">
-                            <LogoutButton />
-                        </div>
                     </div>
                 </div>
 

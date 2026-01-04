@@ -43,6 +43,22 @@ export function Footer() {
                   Contact
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/dashboard"
+                  className="text-sm text-green-900 hover:text-green-700 transition-colors"
+                >
+                  Buyer Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/supplier-dashboard"
+                  className="text-sm text-green-900 hover:text-green-700 transition-colors"
+                >
+                  Supplier Dashboard
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
